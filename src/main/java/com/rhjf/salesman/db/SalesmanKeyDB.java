@@ -1,10 +1,8 @@
 package com.rhjf.salesman.db;
 
 import com.rhjf.salesman.model.SalesmanKey;
-import com.rhjf.salesman.model.SalesmanLogin;
-import com.rhjf.salesman.utils.ObjectMapUtils;
+import com.rhjf.salesman.utils.UtilsConstant;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -21,7 +19,7 @@ public class SalesmanKeyDB extends DBBase{
      * @param salesmanID
      * @return
      */
-    public SalesmanKey salesmanKeyInfo(String salesmanID){
+    public SalesmanKey salesmanKeyInfo(Integer salesmanID){
         String sql = "select * from SALESMAN_KEY where SALESMANID=?";
         Map<String,Object> map = queryForMap(sql , new Object[]{salesmanID});
 
@@ -29,7 +27,7 @@ public class SalesmanKeyDB extends DBBase{
             return null;
         }else{
             try {
-                return ObjectMapUtils.mapToObject(map , SalesmanKey.class);
+                return UtilsConstant.mapToBean(map , SalesmanKey.class);
             }catch (Exception e){
                 return null;
             }

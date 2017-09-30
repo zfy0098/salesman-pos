@@ -4,13 +4,12 @@ import com.rhjf.salesman.constant.RespCode;
 import com.rhjf.salesman.db.BankCodeDB;
 import com.rhjf.salesman.model.MerchantModel;
 import com.rhjf.salesman.model.ResponseData;
-import com.rhjf.salesman.utils.ObjectMapUtils;
+import com.rhjf.salesman.utils.UtilsConstant;
 import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class BankBranchListService {
     public void bankBranchList(Map params , ResponseData response){
         MerchantModel merchantModel;
         try {
-            merchantModel = ObjectMapUtils.mapToObject(params , MerchantModel.class);
+            merchantModel = UtilsConstant.mapToBean(params , MerchantModel.class);
         }catch (Exception e){
             return ;
         }

@@ -38,12 +38,6 @@ public class RespCode {
 	
 	public static final String[] BankCardInfoErroe = {"E016" , "持卡人信息不一致，请确认信息是否正确"};
 
-	public static final String[] EditMerchantLevelError = {"E017" , "该商户等级只能为铂金会员或钻石会员"};
-
-	public static final String[] EditMerchantLevelError2 = {"E017" , "该商户等级只能为钻石会员"};
-
-	public static final String[] EditMerchantLevelError3 = {"E018" , "30天内只允许修改一次会员等级"};
-
 	public static final String[] PermissionDeniedError = {"E018" , "您无权执行此操作"};
 
 	public static final String[] BindedErrir = {"E019" , "用户只能绑定自己代理商申请的固定码"};

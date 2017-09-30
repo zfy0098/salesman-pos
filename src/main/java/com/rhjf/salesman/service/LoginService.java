@@ -1,6 +1,5 @@
 package com.rhjf.salesman.service;
 
-import com.rhjf.salesman.constant.Constants;
 import com.rhjf.salesman.constant.RespCode;
 import com.rhjf.salesman.db.SalesmanKeyDB;
 import com.rhjf.salesman.db.SalesmanLoginDB;
@@ -44,11 +43,11 @@ public class LoginService {
     @Value("${protectINDEX}")
     private String protectINDEX;
 
-    public void login(SalesmanLogin user, Map<String,Object> map , ResponseData response){
+    public void login(SalesmanLogin user, Map map , ResponseData response){
 
         LoginModel loginModel ;
         try{
-            loginModel = ObjectMapUtils.mapToObject(map , LoginModel.class);
+            loginModel = UtilsConstant.mapToBean(map , LoginModel.class);
         }catch (Exception e){
             log.error("转换实体类失败:" , e);
             response.setRespCode(RespCode.NETWORKError[0]);
@@ -69,7 +68,6 @@ public class LoginService {
             return ;
         }else{
 
-            user.setLastLoginTime(DateUtil.getNowTime(DateUtil.yyyyMMddHHmmss));
             user.setLoginPSN(loginModel.getTerminalInfo());
             salesmanLoginDB.updateSalesmanLoginInfo(new Object[]{loginModel.getTerminalInfo() , user.getID()});
             SalesmanKey termKey = salesmanKeyDB.salesmanKeyInfo(user.getSalesmanID());
@@ -81,6 +79,9 @@ public class LoginService {
                 String tmkKey = MD5.md5(UtilsConstant.getUUID(), "UTF-8").toUpperCase();
 
                 salesmanKeyDB.addTermKey(new Object[]{ user.getID() , tmkKey , termTmkKey });
+
+                termKey = new SalesmanKey();
+                termKey.setTermTmkKey(termTmkKey);
             }
 
             try {

@@ -2,7 +2,6 @@ package com.rhjf.salesman.db;
 
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,7 @@ import java.util.Map;
 public class WithdrawDB extends DBBase{
 
 
-    public int tx(String userid , String money , String termSerno ){
+    public int tx(Integer userid , String money , String termSerno ){
         String sql = "insert into WITHDRAW (ID ,applyMoney,applyUserID,applyDate,termserno) " +
                 "VALUES( SEQ_WITHDRAW_ID.nextval , ?,?,sysdate,?)";
 

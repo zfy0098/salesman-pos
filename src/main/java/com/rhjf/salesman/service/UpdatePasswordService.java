@@ -1,13 +1,12 @@
 package com.rhjf.salesman.service;
 
-import com.rhjf.salesman.constant.Constants;
 import com.rhjf.salesman.constant.RespCode;
 import com.rhjf.salesman.db.SalesmanLoginDB;
 import com.rhjf.salesman.model.LoginModel;
 import com.rhjf.salesman.model.ResponseData;
 import com.rhjf.salesman.model.SalesmanLogin;
 import com.rhjf.salesman.utils.MakeCipherText;
-import com.rhjf.salesman.utils.ObjectMapUtils;
+import com.rhjf.salesman.utils.UtilsConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ public class UpdatePasswordService {
 
 
         try{
-            LoginModel loginModel = ObjectMapUtils.mapToObject(params , LoginModel.class);
+            LoginModel loginModel = UtilsConstant.mapToBean(params , LoginModel.class);
 
 
             MakeCipherText makeCipherText = new MakeCipherText();

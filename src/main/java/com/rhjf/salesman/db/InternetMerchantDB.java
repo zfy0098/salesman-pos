@@ -54,7 +54,7 @@ public class InternetMerchantDB extends DBBase{
      * @param salesmanID
      * @return
      */
-    public List<Map<String,Object>> merchantList(String salesmanID){
+    public List<Map<String,Object>> merchantList(Integer salesmanID){
         String sql = "select * from INTERNETMERCHANT where SALESMANID = ?";
         return jdbc.queryForList(sql , new Object[]{salesmanID});
     }

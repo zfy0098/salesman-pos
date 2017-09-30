@@ -1,6 +1,5 @@
 package com.rhjf.salesman.service;
 
-import com.rhjf.salesman.constant.Constants;
 import com.rhjf.salesman.constant.RespCode;
 import com.rhjf.salesman.db.SalesmanKeyDB;
 import com.rhjf.salesman.model.ResponseData;
@@ -19,9 +18,7 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- *
- *
- *    用户签到
+ * 用户签到
  * Created by hadoop on 2017/9/26.
  */
 @Service("signService")
@@ -40,25 +37,23 @@ public class SignService {
     @Value("${DBINITKEY}")
     private String DBINITKEY;
 
-    public void sign(SalesmanLogin user  , Map params , ResponseData response){
+    public void sign(SalesmanLogin user, Map params, ResponseData response) {
         log.info("用户" + user.getLoginID() + "执行签到操作");
 
 
         SalesmanKey termKey = salesmanKeyDB.salesmanKeyInfo(user.getID());
+        Map<String, String> map = GetKey(termKey.getTermTmkKey());
 
-        Map<String,String> map = GetKey(termKey.getTermTmkKey());
-
-
-        int x = salesmanKeyDB.updateMacKey(new Object[]{map.get("keyDB").toString() , user.getID()});
+        int x = salesmanKeyDB.updateMacKey(new Object[]{map.get("keyDB").toString(), user.getID()});
 
         response.setSecretKey(map.get("keyTerm").toString());
 
-        if(x > 0){
+        if (x > 0) {
 
             log.info("用户：" + user.getLoginID() + "签到成功 , 获得秘钥:" + map.get("keyTerm").toString());
             response.setRespCode(RespCode.SUCCESS[0]);
             response.setRespDesc(RespCode.SUCCESS[1]);
-        }else{
+        } else {
             log.info("用户：" + user.getLoginID() + "签到保存数据失败");
             response.setRespCode(RespCode.ServerDBError[0]);
             response.setRespDesc(RespCode.ServerDBError[1]);
@@ -67,12 +62,11 @@ public class SignService {
     }
 
 
-
     public HashMap<String, String> GetKey(String tmkEncry) {
 
         Random random = new Random();
         HashMap<String, String> keyMap = new HashMap<String, String>();
-        char[] codeSequence = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+        char[] codeSequence = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
         try {
             StringBuffer ret = new StringBuffer();
@@ -90,7 +84,7 @@ public class SignService {
             // 生成下发给终端的密钥
             String keyTerm = DESUtil.bcd2Str(DESUtil.encrypt3(data, tmk));
             // 生成存放到数据的密钥
-            String keyDB = DESUtil.bcd2Str(DESUtil.encrypt3(data,DBINITKEY));
+            String keyDB = DESUtil.bcd2Str(DESUtil.encrypt3(data, DBINITKEY));
             keyMap.put("keyTerm", keyTerm);
             keyMap.put("keyDB", keyDB);
             keyMap.put("checkCode", checkCode.substring(0, 8));

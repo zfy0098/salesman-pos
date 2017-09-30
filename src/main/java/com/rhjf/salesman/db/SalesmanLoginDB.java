@@ -1,9 +1,8 @@
 package com.rhjf.salesman.db;
 
 import com.rhjf.salesman.model.SalesmanLogin;
-import com.rhjf.salesman.utils.ObjectMapUtils;
+import com.rhjf.salesman.utils.UtilsConstant;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -19,19 +18,17 @@ public class SalesmanLoginDB extends DBBase{
      * @param loginID
      * @return
      */
-    public SalesmanLogin salesmanInfo(String loginID){
+    public SalesmanLogin salesmanInfo(String loginID) throws  Exception{
         String sql = "select * from SALESMAN_LOGIN where LOGINID=?";
         Map<String,Object> map = queryForMap(sql , new Object[]{loginID});
 
         if(map == null || map.isEmpty()){
             return null;
-        }else{
-            try {
-                return ObjectMapUtils.mapToObject(map , SalesmanLogin.class);
-            }catch (Exception e){
-                return null;
-            }
+        }else {
+
+            return UtilsConstant.mapToBean(map , SalesmanLogin.class);
         }
+
     }
 
 

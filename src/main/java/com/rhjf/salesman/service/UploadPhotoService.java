@@ -1,13 +1,11 @@
 package com.rhjf.salesman.service;
 
-import com.rhjf.salesman.constant.Constants;
 import com.rhjf.salesman.constant.RespCode;
 import com.rhjf.salesman.db.InternetMerchantDB;
 import com.rhjf.salesman.model.ResponseData;
 import com.rhjf.salesman.model.SalesmanLogin;
 import com.rhjf.salesman.model.UploadPhotoModel;
 import com.rhjf.salesman.utils.Image64Bit;
-import com.rhjf.salesman.utils.ObjectMapUtils;
 import com.rhjf.salesman.utils.UtilsConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +36,7 @@ public class UploadPhotoService {
     @Value("${imgPath}")
     private String imgPath;
 
-    @Value("${imgPath}")
+    @Value("${imgUrl}")
     private String imgUrl;
 
     @Autowired
@@ -49,7 +47,7 @@ public class UploadPhotoService {
 
         UploadPhotoModel uploadPhotoModel ;
         try {
-            uploadPhotoModel = ObjectMapUtils.mapToObject(params, UploadPhotoModel.class);
+            uploadPhotoModel = UtilsConstant.mapToBean(params, UploadPhotoModel.class);
         }catch (Exception e){
 
             log.error("转换实体类异常：" , e);

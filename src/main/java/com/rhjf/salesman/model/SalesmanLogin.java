@@ -1,29 +1,29 @@
 package com.rhjf.salesman.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by hadoop on 2017/9/26.
  */
 public class SalesmanLogin implements Serializable{
 
-    private String ID;
+    private Integer ID;
     private String loginID;
     private String password;
-    private String createTime;
+    private Date createTime;
     private String feeAmount;
     private String feeBalance;
-    private String salesmanID;
+    private Integer salesmanID;
     private String loginPSN;
-    private String lastLoginTime;
+    private Date lastLoginTime;
 
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
-    public String getID() {
+    public Integer getID() {
         return ID;
+    }
+    public void setID(Integer ID) {
+        this.ID = ID;
     }
 
     public void setLoginID(String loginID) {
@@ -42,11 +42,12 @@ public class SalesmanLogin implements Serializable{
         return password;
     }
 
-    public String getCreateTime() {
+
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
@@ -66,12 +67,11 @@ public class SalesmanLogin implements Serializable{
         this.feeBalance = feeBalance;
     }
 
-    public void setSalesmanID(String salesmanID) {
-        this.salesmanID = salesmanID;
-    }
 
-    public String getSalesmanID() {
-        return salesmanID;
+    public Integer getSalesmanID() {return salesmanID;}
+
+    public void setSalesmanID(Integer salesmanID) {
+        this.salesmanID = salesmanID;
     }
 
     public void setLoginPSN(String loginPSN) {
@@ -82,11 +82,11 @@ public class SalesmanLogin implements Serializable{
         return loginPSN;
     }
 
-    public void setLastLoginTime(String lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
+    public Date getLastLoginTime() {
+        return lastLoginTime;
     }
 
-    public String getLastLoginTime() {
-        return lastLoginTime;
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 }

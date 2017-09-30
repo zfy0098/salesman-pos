@@ -93,15 +93,17 @@ public class UtilsConstant {
                 String propertyName = entry.getKey();       //属性名  
                 Object value = entry.getValue();
                 
-                String setMethodName = "set"    
-                        + propertyName.substring(0, 1).toUpperCase()  
-                        + propertyName.substring(1);    
-                
-                
-                Field field = getClassField(clazz , propertyName);    
-                if(field==null){
-                	continue;  
-                }
+
+                Field field = getClassField(clazz , propertyName);
+				if(field==null){
+					continue;
+				}
+
+				String setMethodName = "set"
+						+ field.getName().substring(0, 1).toUpperCase()
+						+ field.getName().substring(1);
+
+
                 Class<?> fieldTypeClass = field.getType();
                 if(value==null){
                 	 continue;

@@ -60,8 +60,7 @@ public class HttpClient {
                 UrlEncodedFormEntity uefEntity = new UrlEncodedFormEntity(formparams, "UTF-8");
                 httppost.setEntity(uefEntity);
             } else {
-                StringEntity rsqentity;
-                rsqentity = new StringEntity(JSONObject.fromObject(params).toString(), "utf-8");
+                StringEntity rsqentity = new StringEntity(JSONObject.fromObject(params).toString(), "utf-8");
                 rsqentity.setContentEncoding("UTF-8");
                 rsqentity.setContentType("application/json");
                 httppost.setEntity(rsqentity);

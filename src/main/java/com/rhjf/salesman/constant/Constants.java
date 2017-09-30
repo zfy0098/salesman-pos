@@ -21,20 +21,11 @@ public class Constants {
 
 
 
-
-
-    /**  短信验证码参数 ***/
-    public static final String ZhuCe = "151603";
-    public static final String SMSCODEAPPID = "8aaf070857acf7a70157bd35887111a4";
-
-
-
-
     /** 新平台入网请求地址 **/
     public static final String REPORT_URL = "http://10.10.20.101:11024/middlepayportal/merchant/in";
 //    public static final String REPORT_URL = "http://portal.ronghuijinfubj.com/middlepayportal/merchant/in";
 
-    public static final String AUTHENCATION_URL = "http://10.10.20.101:11024/middlepayportal/auth/realCard";
+
 //    public static final String AUTHENCATION_URL = "http://portal.ronghuijinfubj.com/middlepayportal/auth/realCard";
 
 

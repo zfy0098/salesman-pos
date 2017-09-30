@@ -60,7 +60,7 @@ public class AddMerchantService {
 
             String bankType = "TOPRIVATE";
 
-            MerchantModel merchantInfo = ObjectMapUtils.mapToObject(params , MerchantModel.class);
+            MerchantModel merchantInfo = UtilsConstant.mapToBean(params , MerchantModel.class);
 
 
             Map<String,Object> bankCodeMap = bankCodeDB.getBankCodeInfo(merchantInfo.getBankSubbranch());

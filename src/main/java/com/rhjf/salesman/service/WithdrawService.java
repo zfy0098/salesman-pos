@@ -3,7 +3,7 @@ package com.rhjf.salesman.service;
 import com.rhjf.salesman.db.WithdrawDB;
 import com.rhjf.salesman.model.SalesmanLogin;
 import com.rhjf.salesman.model.WithdrawModel;
-import com.rhjf.salesman.utils.ObjectMapUtils;
+import com.rhjf.salesman.utils.UtilsConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class WithdrawService {
 
         try {
 
-            WithdrawModel withdrawModel = ObjectMapUtils.mapToObject(params , WithdrawModel.class);
+            WithdrawModel withdrawModel = UtilsConstant.mapToBean(params , WithdrawModel.class);
 
 
             Integer feeBalance = Integer.parseInt(user.getFeeBalance());
