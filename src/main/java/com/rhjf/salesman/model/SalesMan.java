@@ -1,31 +1,36 @@
 package com.rhjf.salesman.model;
 
+
 /**
  * Created by hadoop on 2017/9/29.
+ *
+ *
+ * @author hadoop
  */
 public class SalesMan {
 
 
-    private String ID;
+    private Integer ID;
 
     private String name;
     private String phone;
     private String createDate;
     private String feeRate;
-    private int userStatus;
+    private Integer userStatus;
     private String agentID;
     private String bankNo;
     private String IDNumber;
     private String bankName;
     private String bankCode;
     private String bankSybool;
+    private String salesManNO;
 
 
-    public String getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
@@ -115,5 +120,17 @@ public class SalesMan {
 
     public void setBankSybool(String bankSybool) {
         this.bankSybool = bankSybool;
+    }
+
+    public void setUserStatus(Integer userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public String getSalesManNO() {
+        return salesManNO;
+    }
+
+    public void setSalesManNO(String salesManNO) {
+        this.salesManNO = salesManNO;
     }
 }

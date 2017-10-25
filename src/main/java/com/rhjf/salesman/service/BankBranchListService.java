@@ -2,6 +2,7 @@ package com.rhjf.salesman.service;
 
 import com.rhjf.salesman.constant.RespCode;
 import com.rhjf.salesman.db.BankCodeDB;
+import com.rhjf.salesman.db.BinverifyDB;
 import com.rhjf.salesman.model.MerchantModel;
 import com.rhjf.salesman.model.ResponseData;
 import com.rhjf.salesman.utils.UtilsConstant;
@@ -26,11 +27,16 @@ public class BankBranchListService {
     @Autowired
     private BankCodeDB bankCodeDB;
 
+    @Autowired
+    private BinverifyDB binverifyDB;
+
+
     public void bankBranchList(Map params , ResponseData response){
         MerchantModel merchantModel;
         try {
             merchantModel = UtilsConstant.mapToBean(params , MerchantModel.class);
         }catch (Exception e){
+            log.error("转换java bean 异常:" , e);
             return ;
         }
 
@@ -38,7 +44,15 @@ public class BankBranchListService {
         String bankCity = merchantModel.getBankCity();
         String accountNo = merchantModel.getBankCardNo();
 
-        String bankName = merchantModel.getBankName();
+        Map<String,Object> binMap = binverifyDB.bankBin(merchantModel.getBankCardNo());
+
+        if(binMap == null){
+            response.setRespCode(RespCode.BankCardInfoErroe[0]);
+            response.setRespDesc(RespCode.BankCardInfoErroe[1]);
+            return ;
+        }
+
+        String bankName = UtilsConstant.ObjToStr(binMap.get("BANKNAME"));
 
         log.info("获取支行名称列表： 所在省份:" + bankProv + " , 城市:" + bankCity + ", 卡号：" + accountNo);
 

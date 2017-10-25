@@ -1,10 +1,9 @@
 package com.rhjf.salesman.service;
 
 import com.rhjf.salesman.constant.RespCode;
-import com.rhjf.salesman.db.CustomerDB;
-import com.rhjf.salesman.db.InternetMerchantDB;
-import com.rhjf.salesman.model.MerchantModel;
+import com.rhjf.salesman.db.PosOrderDB;
 import com.rhjf.salesman.model.ResponseData;
+import com.rhjf.salesman.model.SalesManProfitModel;
 import com.rhjf.salesman.model.SalesmanLogin;
 import com.rhjf.salesman.utils.DateJsonValueProcessor;
 import com.rhjf.salesman.utils.DateUtil;
@@ -21,41 +20,46 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- *   商户列表
- * Created by hadoop on 2017/9/27.
+ * Created by hadoop on 2017/10/23.
  *
  * @author hadoop
- *
  */
-@Service("merchantList")
-public class MerchantListService {
+@Service("SalesManProfitListService")
+public class SalesManProfitListService {
 
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
 
     @Autowired
-    private CustomerDB customerDB;
+    private PosOrderDB posOrderDB;
 
-    public void merchantList(SalesmanLogin user , Map params , ResponseData response){
+    public void SalesManProfitList(SalesmanLogin user, Map params, ResponseData response) {
 
         try {
+            SalesManProfitModel salesManProfitModel = UtilsConstant.mapToBean(params, SalesManProfitModel.class);
 
-            MerchantModel merchantModel = UtilsConstant.mapToBean(params , MerchantModel.class);
 
-            List<Map<String , Object>> list = customerDB.merchantList(new Object[]{user.getSalesmanID() , "%" +UtilsConstant.ObjToStr(merchantModel.getMerchantName())+ "%"});
+            List<Map<String,Object>> saleManProfitList = posOrderDB.saleManProfitList(null);
 
 
             JsonConfig jsonConfig = new JsonConfig();
-            jsonConfig.registerJsonValueProcessor(Timestamp.class, new DateJsonValueProcessor(DateUtil.yyyy_MM_dd));
-            JSONArray array = JSONArray.fromObject(list,jsonConfig);
+            jsonConfig.registerJsonValueProcessor(Timestamp.class, new DateJsonValueProcessor(DateUtil.yyyy_MM_ddHH_mm_ss));
+            JSONArray array = JSONArray.fromObject(saleManProfitList,jsonConfig);
+
+
+            response.setProfitTotal("200");
 
             response.setList(array.toString());
+
             response.setRespCode(RespCode.SUCCESS[0]);
             response.setRespDesc(RespCode.SUCCESS[1]);
-        }catch (Exception e){
+
+        } catch (Exception e) {
 
         }
+
+
     }
+
 }

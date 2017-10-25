@@ -14,23 +14,38 @@ import java.util.Map;
 public class WithdrawDB extends DBBase{
 
 
-    public int tx(Integer userid , String money , String termSerno ){
-        String sql = "insert into WITHDRAW (ID ,applyMoney,applyUserID,applyDate,termserno) " +
-                "VALUES( SEQ_WITHDRAW_ID.nextval , ?,?,sysdate,?)";
+    /**
+     *  业务员执行提现操作
+     * @param userid     提现业务员salesman_login表id
+     * @param money      提现金额
+     * @param termSerno
+     * @param accountNo
+     * @return
+     */
+    public int tx(Integer userid , Double money , String termSerno , String accountNo ){
+        String sql = "insert into WITHDRAW (ID ,applyMoney,applyUserID,applyDate,termserno,ACCOUNTNO) " +
+                "VALUES( SEQ_WITHDRAW_ID.nextval , ?,?,sysdate,?,?)";
 
-        jdbc.update(sql, new Object[] {money ,userid , termSerno });
+        jdbc.update(sql, new Object[] {money ,userid , termSerno , accountNo });
 
 
-        String updateFeebalance = "update SALESMAN_LOGIN SET FEEBALANCE=FEEBALANCE-? WHERE ID=?";
-        jdbc.update(updateFeebalance , new Object[]{money , userid});
+        String updateFeeBalance = "update SALESMAN_LOGIN SET FEEBALANCE=FEEBALANCE-? WHERE ID=?";
+        jdbc.update(updateFeeBalance , new Object[]{money + 1 , userid});
 
         return 1;
 
     }
 
 
+    /**
+     *   提现记录
+     * @param obj
+     * @return
+     */
     public List<Map<String,Object>> txlist(Object[] obj){
-        String sql = "select * from WITHDRAW where applyUserID = ?";
+        String sql = "select applymoney , applydate , bankcode , bankname , accountno  " +
+                " from WITHDRAW a left join tab_pay_binverify b on b.verifyCode = SUBSTR(a.accountno,1,b.verifyLength) " +
+                " where a.applyuserid=?";
         return jdbc.queryForList(sql , obj);
     }
 

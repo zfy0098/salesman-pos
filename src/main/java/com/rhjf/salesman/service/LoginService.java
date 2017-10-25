@@ -22,14 +22,16 @@ import java.util.Map;
  *
  *   业务员登录接口
  * Created by hadoop on 2017/9/26.
+ *
+ *
+ * @author hadoop
+ *
  */
 @Service("loginService")
 @Transactional
 public class LoginService {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
-
-
 
     @Autowired
     private SalesmanKeyDB salesmanKeyDB;
@@ -70,7 +72,7 @@ public class LoginService {
 
             user.setLoginPSN(loginModel.getTerminalInfo());
             salesmanLoginDB.updateSalesmanLoginInfo(new Object[]{loginModel.getTerminalInfo() , user.getID()});
-            SalesmanKey termKey = salesmanKeyDB.salesmanKeyInfo(user.getSalesmanID());
+            SalesmanKey termKey = salesmanKeyDB.salesmanKeyInfo(user.getID());
             if(termKey == null){
                 log.info("用户：" + user.getLoginID() + "秘钥配置为空，将重新分配秘钥信息");
 

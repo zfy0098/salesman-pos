@@ -73,6 +73,9 @@ public class HttpClient {
 
         HttpResponse rsp = httpClient.execute(httppost);
 
+
+        log.info("=======================" + url + ":" + rsp.getStatusLine().getStatusCode());
+
         StringBuffer result = new StringBuffer();
         if (rsp != null) {
             HttpEntity entity = rsp.getEntity();

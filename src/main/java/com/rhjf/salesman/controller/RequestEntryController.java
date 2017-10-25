@@ -43,7 +43,7 @@ public class RequestEntryController {
     private ApplicationContext applicationContext;
 
     @Value("${DBINITKEY}")
-    private String DBINITKEY;
+    private String dbInitKey;
 
 
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -126,7 +126,7 @@ public class RequestEntryController {
             /** 是否需要登录信息 **/
             String needLogin = trade.split(",")[2];
             /** 是否需要mac **/
-            String needmac = trade.split(",")[3];
+            String needMac = trade.split(",")[3];
 
 
             SalesmanLogin user = null;
@@ -134,7 +134,7 @@ public class RequestEntryController {
             String mackey = null;
 
             /** 是否需要登录信息  **/
-            if ("1".equals("1")) {
+            if ("1".equals(needLogin)) {
                 /** 获取登录信息  **/
 
                 SalesmanInfoService salesmanInfoService = applicationContext.getBean("SalesmanInfoService", SalesmanInfoService.class);
@@ -158,11 +158,11 @@ public class RequestEntryController {
                     }
 
                     boolean flag = true;
-                    if ("1".equals(needmac)) {
+                    if ("1".equals(needMac)) {
                         /** 需要校验mac **/
                         //  获取用户秘钥信息
-                        SalesmanKey termkey = salesmanInfoService.userTermkey(user.getSalesmanID());
-                        mackey = termkey.getMacKey();
+                        SalesmanKey termKey = salesmanInfoService.userTermkey(user.getID());
+                        mackey = termKey.getMacKey();
 
                         String mac = makeMac(mackey, JSONObject.fromObject(data), user);
 
@@ -192,7 +192,7 @@ public class RequestEntryController {
 
 
             /** 如果请求需要校验mac 那么响应报文中也需要添加mac字段. 加密数据为返回的报文 **/
-            if (needmac.equals("1")) {
+            if ("1".equals(needMac)) {
                 String mac = makeMac(mackey, JSONObject.fromObject(response), user);
                 log.info("响应报文中的mac" + mac);
                 response.setMac(mac);
@@ -220,7 +220,7 @@ public class RequestEntryController {
     public Object paraFilterReturn(Object obj) {
 
         Map<String, Object> sArray = UtilsConstant.jsonToMap(JSONObject.fromObject(obj));
-        Map<String, Object> sArray2 = new HashMap<String, Object>();
+        Map<String, Object> sArray2 = new HashMap<String, Object>(16);
         if (sArray == null || sArray.size() <= 0) {
             return "";
         }
@@ -242,7 +242,7 @@ public class RequestEntryController {
      * @param user
      * @return
      */
-    public String makeMac(String mackey, JSONObject json, SalesmanLogin user) {
+    public String makeMac(String macKey, JSONObject json, SalesmanLogin user) {
 
         Map<String, Object> contentData = UtilsConstant.jsonToMap(json);
         String macStr = "";
@@ -257,8 +257,8 @@ public class RequestEntryController {
             }
         }
         log.info("加密原文：macStr:" + macStr);
-        log.info("加密秘钥密文:" + mackey);
-        String rMac = DESUtil.mac(macStr, mackey, DBINITKEY);
+        log.info("加密秘钥密文:" + macKey);
+        String rMac = DESUtil.mac(macStr, macKey, dbInitKey);
         return rMac;
     }
 }

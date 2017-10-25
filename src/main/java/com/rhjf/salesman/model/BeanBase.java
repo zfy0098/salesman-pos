@@ -5,13 +5,11 @@ package com.rhjf.salesman.model;
  */
 public class BeanBase {
 
-
     /**  业务员登录账号 **/
     private String loginID;
 
-
-    /**  商户登录账号（标识） **/
-    private String merchantLoginID;
+    /**  商户号 **/
+    private String customerNo;
 
 
     /**  请求类型 **/
@@ -67,11 +65,12 @@ public class BeanBase {
         return terminalInfo;
     }
 
-    public String getMerchantLoginID() {
-        return merchantLoginID;
+
+    public String getCustomerNo() {
+        return customerNo;
     }
 
-    public void setMerchantLoginID(String merchantLoginID) {
-        this.merchantLoginID = merchantLoginID;
+    public void setCustomerNo(String customerNo) {
+        this.customerNo = customerNo;
     }
 }

@@ -1,7 +1,6 @@
 package com.rhjf.salesman.service;
 
 import com.rhjf.salesman.constant.RespCode;
-import com.rhjf.salesman.db.SalesmanLoginDB;
 import com.rhjf.salesman.db.SmsCodeDB;
 import com.rhjf.salesman.model.LoginModel;
 import com.rhjf.salesman.model.ResponseData;
@@ -11,31 +10,28 @@ import com.rhjf.salesman.utils.UtilsConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
 /**
- * Created by hadoop on 2017/9/30.
+ * Created by hadoop on 2017/10/23.
  *
  * @author hadoop
  */
-@Service("ForgetPWDService")
-public class ForgetpwdService {
+@Service("VerifySmsCodeService")
+@Transactional
+public class VerifySmsCodeService {
+
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${protectINDEX}")
-    private String protectINDEX;
 
     @Autowired
     private SmsCodeDB smsCodeDB;
 
-    @Autowired
-    private SalesmanLoginDB salesmanLoginDB;
-
-    public void forgetPWD(SalesmanLogin user , Map params , ResponseData response){
+    public void verifySmsCode(SalesmanLogin user , Map params , ResponseData response){
 
         MakeCipherText makeCipherText = new MakeCipherText();
 
@@ -65,17 +61,9 @@ public class ForgetpwdService {
 
         if(codeMap != null && smsCode.equals(codeMap.get("SMSCODE"))){
 
-            String password = makeCipherText.MakeLoginPwd(loginModel.getLoginPWD(),protectINDEX);
+            response.setRespCode(RespCode.SUCCESS[0]);
+            response.setRespDesc(RespCode.SUCCESS[1]);
 
-            int x = salesmanLoginDB.updateSalesmanLoginPWD(new Object[]{password ,  user.getLoginID()});
-
-            if(x > 0){
-                response.setRespCode(RespCode.SUCCESS[0]);
-                response.setRespDesc(RespCode.SUCCESS[1]);
-            }else{
-                response.setRespCode(RespCode.ServerDBError[0]);
-                response.setRespDesc(RespCode.ServerDBError[1]);
-            }
             smsCodeDB.delSmsCode(new Object[]{loginID});
 
         } else{

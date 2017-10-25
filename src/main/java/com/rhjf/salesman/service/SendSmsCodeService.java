@@ -1,11 +1,9 @@
 package com.rhjf.salesman.service;
 
-import com.rhjf.salesman.constant.Constants;
 import com.rhjf.salesman.constant.RespCode;
 import com.rhjf.salesman.db.SmsCodeDB;
 import com.rhjf.salesman.model.ResponseData;
 import com.rhjf.salesman.model.SalesmanLogin;
-import com.rhjf.salesman.utils.DateUtil;
 import com.rhjf.salesman.utils.SmsUtil;
 import com.rhjf.salesman.utils.UtilsConstant;
 import net.sf.json.JSONObject;
@@ -19,6 +17,10 @@ import java.util.Map;
 
 /**
  * Created by hadoop on 2017/9/30.
+ *
+ *
+ * @author hadoop
+ *
  */
 @Service("SendSmsCodeService")
 public class SendSmsCodeService {

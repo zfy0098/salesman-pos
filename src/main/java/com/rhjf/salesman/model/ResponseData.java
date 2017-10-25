@@ -217,8 +217,34 @@ public class ResponseData implements Serializable {
 	private String antiAmount;
 	
 	
-	//  费率
+	/**  费率 **/
 	private String rate;
+
+
+	/**  关于我们 **/
+	private String aboutURL;
+
+
+	/**  公司资质 **/
+	private String companyAptitudeURL;
+
+
+
+	/**  业务员总收益 **/
+	private String profitTotal;
+
+
+	/**  卡类型 **/
+	private String cardName;
+
+
+	/**  银行缩写 **/
+	private String bankSymbol;
+
+
+	/**  商户号 **/
+	private String customerNo;
+
 	
 	public String getMerchantNo() {
 		return merchantNo;
@@ -723,5 +749,54 @@ public class ResponseData implements Serializable {
 	public void setRate(String rate) {
 		this.rate = rate;
 	}
-	
+
+
+	public String getAboutURL() {
+		return aboutURL;
+	}
+
+	public void setAboutURL(String aboutURL) {
+		this.aboutURL = aboutURL;
+	}
+
+	public String getCompanyAptitudeURL() {
+		return companyAptitudeURL;
+	}
+
+	public void setCompanyAptitudeURL(String companyAptitudeURL) {
+		this.companyAptitudeURL = companyAptitudeURL;
+	}
+
+	public String getProfitTotal() {
+		return profitTotal;
+	}
+
+	public void setProfitTotal(String profitTotal) {
+		this.profitTotal = profitTotal;
+	}
+
+
+	public String getCardName() {
+		return cardName;
+	}
+
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
+	}
+
+	public String getBankSymbol() {
+		return bankSymbol;
+	}
+
+	public void setBankSymbol(String bankSymbol) {
+		this.bankSymbol = bankSymbol;
+	}
+
+	public String getCustomerNo() {
+		return customerNo;
+	}
+
+	public void setCustomerNo(String customerNo) {
+		this.customerNo = customerNo;
+	}
 }

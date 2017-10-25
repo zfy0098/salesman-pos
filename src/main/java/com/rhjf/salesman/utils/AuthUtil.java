@@ -100,9 +100,7 @@ public class AuthUtil {
 //    }
 
 
-
     public  static  boolean authen(String name , String IDCardNo , String bankCardNo){
-
         try {
             Map<String,Object> map = new TreeMap<String,Object>();
             map.put("channelNo", CHANNLENO);
@@ -124,14 +122,12 @@ public class AuthUtil {
 
             JSONObject json = JSONObject.fromObject(content);
 
-
             log.info("新商户：鉴权，" + map.toString() + "鉴权结果:" + json.toString());
             if (!json.getString("resCode").equals(Constants.payRetCode)) {
                 log.info("业务员新增用户： 银行信息鉴权没有通过");
                 return true;
             } else {
                 log.info("鉴权通过。银行卡号" + bankCardNo );
-
                 return false;
             }
         }catch (Exception e){

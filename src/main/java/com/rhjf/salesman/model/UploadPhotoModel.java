@@ -3,6 +3,9 @@ package com.rhjf.salesman.model;
 
 /**
  * Created by hadoop on 2017/9/27.
+ *
+ * @author hadoop
+ *
  */
 public class UploadPhotoModel extends  BeanBase {
 
@@ -21,6 +24,21 @@ public class UploadPhotoModel extends  BeanBase {
 
     /** 营业执照照片 **/
     private String businessPhoto;
+
+    /**  开户许可证  **/
+    private String openingLicense;
+
+    /**  店面照片 **/
+    private String storeFront;
+
+    /**  内景 **/
+    private String interior;
+
+    /** 街道  **/
+    private String street;
+
+    /**  其他 **/
+    private String other;
 
 
     public String getHandheldIDPhoto() {
@@ -61,5 +79,46 @@ public class UploadPhotoModel extends  BeanBase {
 
     public void setBusinessPhoto(String businessPhoto) {
         this.businessPhoto = businessPhoto;
+    }
+
+
+    public String getOpeningLicense() {
+        return openingLicense;
+    }
+
+    public void setOpeningLicense(String openingLicense) {
+        this.openingLicense = openingLicense;
+    }
+
+    public String getStoreFront() {
+        return storeFront;
+    }
+
+    public void setStoreFront(String storeFront) {
+        this.storeFront = storeFront;
+    }
+
+    public String getInterior() {
+        return interior;
+    }
+
+    public void setInterior(String interior) {
+        this.interior = interior;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
     }
 }

@@ -103,13 +103,12 @@ public class UtilsConstant {
 						+ field.getName().substring(0, 1).toUpperCase()
 						+ field.getName().substring(1);
 
-
                 Class<?> fieldTypeClass = field.getType();
-                if(value==null){
+				if(value==null){
                 	 continue;
                 }
-                value = convertValType(value, fieldTypeClass); 
-                clazz.getMethod(setMethodName, field.getType()).invoke(obj, value);   
+				value = convertValType(value, fieldTypeClass);
+                clazz.getMethod(setMethodName, field.getType()).invoke(obj, value);
             }    
         }    
         return obj;    

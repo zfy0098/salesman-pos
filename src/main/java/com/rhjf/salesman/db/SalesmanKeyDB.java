@@ -4,6 +4,7 @@ import com.rhjf.salesman.model.SalesmanKey;
 import com.rhjf.salesman.utils.UtilsConstant;
 import org.springframework.stereotype.Repository;
 
+import java.net.StandardSocketOptions;
 import java.util.Map;
 
 /**
@@ -29,6 +30,7 @@ public class SalesmanKeyDB extends DBBase{
             try {
                 return UtilsConstant.mapToBean(map , SalesmanKey.class);
             }catch (Exception e){
+                e.printStackTrace();
                 return null;
             }
         }

@@ -25,7 +25,6 @@ public class SalesmanLoginDB extends DBBase{
         if(map == null || map.isEmpty()){
             return null;
         }else {
-
             return UtilsConstant.mapToBean(map , SalesmanLogin.class);
         }
 

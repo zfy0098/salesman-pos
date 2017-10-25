@@ -52,6 +52,5 @@ public class UpdatePasswordService {
             response.setRespCode(RespCode.NETWORKError[0]);
             response.setRespDesc(RespCode.NETWORKError[1]);
         }
-
     }
 }

@@ -4,18 +4,18 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by hadoop on 2017/9/26.
+ *
+ * @author hadoop
  */
 @Repository
 public class InternetMerchantDB extends DBBase{
@@ -32,12 +32,14 @@ public class InternetMerchantDB extends DBBase{
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         final String sql = "insert into INTERNETMERCHANT (ID,SALESMANID , NAME , MERCHANTNAME , MERCHANTPERSONNAME , IDCARDNO,STATE,CITY," +
-                "COUNTY , ADDRESS , BUSINESSLICENSE , BANKCARDNO , BANKNAME , BANKCODE , BANKBRANCH , D0_FALG , MCC_CATEGORY) VALEUS " +
-                "(SEQ_INTERNETMERCHANT_ID.nextval , ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "COUNTY , ADDRESS , BUSINESSLICENSE , BANKCARDNO , BANKNAME , BANKCODE , BANKBRANCH , D0_FALG ," +
+                " MCC_CATEGORY , CUSTOMERNO ,POSSTATUS , ONLINESTATUS , BUSINESSSCOPE , BUSINESSREGISTNAME,ORGANIZATIONCODE,CERTIFICATEREGIST , ACCOUNTNAME , CREATEDATE , CREDITCARDNO) VALUES " +
+                "(SEQ_INTERNETMERCHANT_ID.nextval , ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? , ? ,? ,?,? , ?,?, ? ,? ,sysdate , ?)";
 
-        this.jdbcTemplate.update(new PreparedStatementCreator(){
+        this.jdbc.update(new PreparedStatementCreator(){
+            @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"ID"});
                 for(int i = 0; i < obj.length; i++) {
                     ps.setString(i + 1, obj[i].toString());
                 }
@@ -67,7 +69,7 @@ public class InternetMerchantDB extends DBBase{
      */
     public int updateMerchantPhotoInfo(Object[] obj){
 
-        String sql = "update  set IDCARDFRONT=? , IDCARDREVERSE=? , IDCARDHOLD=? where ID=?";
+        String sql = "update internetmerchant  set IDCARDFRONT=? , IDCARDREVERSE=? , IDCARDHOLD=? where ID=?";
 
         return jdbc.update(sql , obj);
     }

@@ -10,6 +10,9 @@ import javax.annotation.PostConstruct;
 
 /**
  * Created by hadoop on 2017/9/25.
+ *
+ * @author hadoop
+ *
  */
 
 @Repository
@@ -24,7 +27,7 @@ public class DBBase {
 
     @PostConstruct
     public void init() {
-        this.jdbcTemplate = jdbc;
+        jdbcTemplate = jdbc;
     }
 
 

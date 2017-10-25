@@ -12,8 +12,8 @@ public class SalesmanLogin implements Serializable{
     private String loginID;
     private String password;
     private Date createTime;
-    private String feeAmount;
-    private String feeBalance;
+    private Double feeAmount;
+    private Double feeBalance;
     private Integer salesmanID;
     private String loginPSN;
     private Date lastLoginTime;
@@ -51,22 +51,21 @@ public class SalesmanLogin implements Serializable{
         this.createTime = createTime;
     }
 
-    public String getFeeAmount() {
+    public Double getFeeAmount() {
         return feeAmount;
     }
 
-    public void setFeeAmount(String feeAmount) {
+    public void setFeeAmount(Double feeAmount) {
         this.feeAmount = feeAmount;
     }
 
-    public String getFeeBalance() {
+    public Double getFeeBalance() {
         return feeBalance;
     }
 
-    public void setFeeBalance(String feeBalance) {
+    public void setFeeBalance(Double feeBalance) {
         this.feeBalance = feeBalance;
     }
-
 
     public Integer getSalesmanID() {return salesmanID;}
 

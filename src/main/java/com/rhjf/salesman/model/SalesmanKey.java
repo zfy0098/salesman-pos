@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class SalesmanKey implements Serializable{
 
 
-    private String ID;
+    private Integer ID;
 
     private String macKey;
 
@@ -19,11 +19,11 @@ public class SalesmanKey implements Serializable{
     private String termTmkKey;
 
 
-    public void setID(String ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
-    public String getID() {
+    public Integer getID() {
         return ID;
     }
 
@@ -49,5 +49,14 @@ public class SalesmanKey implements Serializable{
 
     public void setTermTmkKey(String termTmkKey) {
         this.termTmkKey = termTmkKey;
+    }
+
+
+    public String getSalesmanID() {
+        return salesmanID;
+    }
+
+    public void setSalesmanID(String salesmanID) {
+        this.salesmanID = salesmanID;
     }
 }

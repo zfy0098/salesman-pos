@@ -8,6 +8,10 @@ import java.util.Map;
 
 /**
  * Created by hadoop on 2017/9/28.
+ *
+ *
+ * @author hadoop
+ *
  */
 @Repository
 public class BankCodeDB extends DBBase{
@@ -32,12 +36,10 @@ public class BankCodeDB extends DBBase{
 
         List<Map<String,Object>> list = jdbc.queryForList(sql , obj);
 
-        List<String> bankbranchslist = new ArrayList<>();
+        List<String> bankBranchList = new ArrayList<>();
         for (Map<String,Object>  map : list) {
-            bankbranchslist.add(map.get("bankbranchs").toString());
+            bankBranchList.add(map.get("bankbranchs").toString());
         }
-        return bankbranchslist;
+        return bankBranchList;
     }
-
-
 }

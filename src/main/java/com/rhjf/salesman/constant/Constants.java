@@ -21,13 +21,6 @@ public class Constants {
 
 
 
-    /** 新平台入网请求地址 **/
-    public static final String REPORT_URL = "http://10.10.20.101:11024/middlepayportal/merchant/in";
-//    public static final String REPORT_URL = "http://portal.ronghuijinfubj.com/middlepayportal/merchant/in";
-
-
-//    public static final String AUTHENCATION_URL = "http://portal.ronghuijinfubj.com/middlepayportal/auth/realCard";
-
 
     public static final Integer[]  wxMCCType = {203,2,3,204,205,206,207,208,6,9,19,266,267,268,269,271,272,284,310,315,13,270,90,273,289,311,312,
             42,93,94,95,274,275,281,283,313,23,24,276,277,278,279,104,52,53,280,54,56,316,282,314,66,67,285,325,31,317,40,70,259,75,77,57,287,288,

@@ -10,7 +10,7 @@ import java.util.Map;
 public class SmsCodeDB extends  DBBase{
 
     public int saveSmsCode(Object[] obj){
-        String sql = "insert into SMSCODE (id,PHONENUM , SMSCODE , INSERTTIME)" +
+        String sql = "insert into SMSCODE (id,PHONE , SMSCODE , CARETEDATE)" +
                 " values (SEQ_SMSCODE_ID.nextval , ? , ? , sysdate)";
         return jdbc.update(sql , obj);
     }
@@ -19,13 +19,13 @@ public class SmsCodeDB extends  DBBase{
 
     public Map<String,Object> getSmsCode(Object[] obj){
 
-        String sql = "select * from SMSCODE where PHONENUM=? ORDER BY INSERTTIME DESC";
+        String sql = "select * from SMSCODE where PHONE=? ORDER BY CARETEDATE DESC";
         return queryForMap(sql , obj);
     }
 
 
     public int delSmsCode(Object[] obj){
-        String sql = "delete from SMSCODE where PHONENUM=?";
+        String sql = "delete from SMSCODE where PHONE=?";
 
         return jdbc.update(sql , obj);
     }

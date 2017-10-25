@@ -2,6 +2,8 @@ package com.rhjf.salesman.model;
 
 /**
  * Created by hadoop on 2017/9/26.
+ *
+ * @author hadoop
  */
 public class MerchantModel extends BeanBase{
 
@@ -9,12 +11,19 @@ public class MerchantModel extends BeanBase{
     /**  姓名 **/
     private String name;
 
+    /**  商户手机号 **/
+    private String merchantPhone;
+
     /**  身份证号 **/
     private String IDCardNo;
 
 
     /**  商户名称 **/
     private String merchantName;
+
+
+    /**  持卡人名称 **/
+    private String accountName;
 
 
     /**  商户联系人 **/
@@ -80,10 +89,35 @@ public class MerchantModel extends BeanBase{
     /**  是否为D0 商户 Y 是 N 否 **/
     private String D0falg;
 
-
     /** 商户类型：1 -- 标准   2 -- 优惠    3 减免类 **/
     private String mccCategory;
 
+
+    /** mcc类型码 **/
+    private String mcc;
+
+
+    /** 经营范围 **/
+    private String businessScope;
+
+
+    /**  工商注册名称 **/
+    private String businessRegistName;
+
+
+    /** 组织结构代码 **/
+    private String organizationCode;
+
+
+    /** 税务登记证 **/
+    private String certificateRegist;
+
+    /** 账户类型 1 对私 2 对公 **/
+    private String settleAccountType;
+
+
+    /**  信用卡 **/
+    private String creditCard;
 
     public String getName() {
         return name;
@@ -285,5 +319,79 @@ public class MerchantModel extends BeanBase{
 
     public void setMccCategory(String mccCategory) {
         this.mccCategory = mccCategory;
+    }
+
+
+    public String getMerchantPhone() {
+        return merchantPhone;
+    }
+
+    public void setMerchantPhone(String merchantPhone) {
+        this.merchantPhone = merchantPhone;
+    }
+
+
+    public String getMcc() {
+        return mcc;
+    }
+
+    public void setMcc(String mcc) {
+        this.mcc = mcc;
+    }
+
+    public String getBusinessScope() {
+        return businessScope;
+    }
+
+    public void setBusinessScope(String businessScope) {
+        this.businessScope = businessScope;
+    }
+
+    public String getBusinessRegistName() {
+        return businessRegistName;
+    }
+
+    public void setBusinessRegistName(String businessRegistName) {
+        this.businessRegistName = businessRegistName;
+    }
+
+    public String getOrganizationCode() {
+        return organizationCode;
+    }
+
+    public void setOrganizationCode(String organizationCode) {
+        this.organizationCode = organizationCode;
+    }
+
+    public String getCertificateRegist() {
+        return certificateRegist;
+    }
+
+    public void setCertificateRegist(String certificateRegist) {
+        this.certificateRegist = certificateRegist;
+    }
+
+    public String getSettleAccountType() {
+        return settleAccountType;
+    }
+
+    public void setSettleAccountType(String settleAccountType) {
+        this.settleAccountType = settleAccountType;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(String creditCard) {
+        this.creditCard = creditCard;
     }
 }
