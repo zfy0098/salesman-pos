@@ -24,7 +24,7 @@ public class SalesManDB extends  DBBase{
 
 
     public int updateBankNo(Object[] obj){
-        String sql = "update SALESMAN set BANKNO=?  , PHONE=? where id=?";
+        String sql = "update SALESMAN set BANKNO=?  , PHONE=? , BANKNAME=? where id=?";
         return jdbc.update(sql , obj);
     }
 

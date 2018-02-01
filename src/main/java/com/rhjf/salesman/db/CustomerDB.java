@@ -18,9 +18,9 @@ public class CustomerDB extends  DBBase{
      * @return
      */
     public List<Map<String ,Object>> merchantList(Object [] obj){
-        String sql = "select a.SHORT_NAME , a.START_TIME  , a.STATUS , a.CUSTOMER_NO , b.legal_contact " +
+        String sql = "select a.SHORT_NAME , a.creation  , a.STATUS , a.CUSTOMER_NO , b.legal_contact " +
                 "from customer a inner join customer_detail  b on a.id=b.customer_id " +
-                "where a.saleman_id=? and a.SHORT_NAME like ? ";
+                "where a.saleman_id=? and a.SHORT_NAME like ? ORDER  by a.creation desc ";
         return jdbc.queryForList(sql , obj);
     }
 

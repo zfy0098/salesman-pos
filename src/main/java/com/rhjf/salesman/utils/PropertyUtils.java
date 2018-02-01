@@ -3,7 +3,9 @@ package com.rhjf.salesman.utils;
 import java.io.IOException;
 import java.util.Properties;
 
-
+/**
+ * @author hadoop
+ */
 public class PropertyUtils {
 	private Properties pro = new Properties();
 	private static PropertyUtils propertyUtils = new PropertyUtils();

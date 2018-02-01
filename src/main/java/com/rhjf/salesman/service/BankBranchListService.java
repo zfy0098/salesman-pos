@@ -37,6 +37,8 @@ public class BankBranchListService {
             merchantModel = UtilsConstant.mapToBean(params , MerchantModel.class);
         }catch (Exception e){
             log.error("转换java bean 异常:" , e);
+            response.setRespCode(RespCode.NETWORKError[0]);
+            response.setRespDesc(RespCode.NETWORKError[1]);
             return ;
         }
 
@@ -47,8 +49,11 @@ public class BankBranchListService {
         Map<String,Object> binMap = binverifyDB.bankBin(merchantModel.getBankCardNo());
 
         if(binMap == null){
+
+            log.info("卡号：" + merchantModel.getBankCardNo() + "没有成功匹配到卡bin ");
+
             response.setRespCode(RespCode.BankCardInfoErroe[0]);
-            response.setRespDesc(RespCode.BankCardInfoErroe[1]);
+            response.setRespDesc("银行卡信息异常");
             return ;
         }
 

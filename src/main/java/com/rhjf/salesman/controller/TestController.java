@@ -23,14 +23,20 @@ public class TestController {
     @Value("${aboutURL}")
     private String aboutURL;
 
+
+    @Value("${REPORT_CHANNELNAME}")
+    private String channelName;
+
     @RequestMapping("")
     public Object test(){
 
 
         log.info("aboutURL :" + aboutURL);
 
+        log.info("channelName:" + channelName);
+
         log.info("测试类");
         log.error("错误日志");
-        return "123";
+        return aboutURL;
     }
 }

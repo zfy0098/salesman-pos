@@ -42,11 +42,24 @@ public class PosOrderDB extends DBBase {
 
 
     public List<Map<String,Object>> saleManProfitList(Object[] obj){
-        String sql = "select po.amount as amount , nvl(pobe.profit ,0) as  profit  , ctm.short_name as short_name , po.create_time as create_time" +
+        String sql = "select po.amount as amount , nvl(pobe.profit ,0) as  profit , pobe.status , case when pobe.status='SUCCESS' then 'PURCHASE' " +
+                " when pobe.status='REPEAL' then 'PURCHASE_REVERSAL' when pobe.status='REVERSALED' then 'PURCHASE_REVERSAL' end  as TRANS_TYPE   , ctm.short_name as short_name , po.create_time as create_time " +
                 " from pos_order  po inner join customer  ctm on po.customer_no=ctm.customer_no" +
-                " left join (select * from pos_order_break_each where owner_role='SALEMAN' ) pobe on po.id=pobe.order_id  " +
-                " where trunc(po.create_time)>=to_date('20170314','yyyymmdd') and  trunc(po.create_time)<=to_date('20170316','yyyymmdd') ";
-        return jdbc.queryForList(sql );
+                " left join (select profit, order_id , TRANS_TYPE , STATUS from pos_order_break_each where owner_role='SALEMAN' and OWNER_NO=? ) pobe on po.id=pobe.order_id  " +
+                " where trunc(po.create_time)>=to_date(?,'yyyymmdd') and  trunc(po.create_time)<=to_date(?,'yyyymmdd') and ctm.SALEMAN_ID=? " +
+                " and po.status='SUCCESS' order by po.create_time desc  ";
+        return jdbc.queryForList(sql , obj);
     }
 
+
+    public double saleManProfitTotal(Object[] obj){
+        String sql = "select  nvl(sum(pobe.profit) ,0) as  profit  " +
+                " from pos_order  po inner join customer  ctm on po.customer_no=ctm.customer_no" +
+                " left join (select profit, order_id from pos_order_break_each where owner_role='SALEMAN' ) pobe on po.id=pobe.order_id  " +
+                " where trunc(po.create_time)>=to_date(?,'yyyymmdd') and  trunc(po.create_time)<=to_date(?,'yyyymmdd') and ctm.SALEMAN_ID=?  and po.status='SUCCESS' ";
+
+        Double profit = jdbc.queryForObject(sql , obj , Double.class);
+
+        return profit;
+    }
 }

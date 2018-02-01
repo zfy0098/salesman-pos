@@ -67,17 +67,14 @@ public class BindeSNService {
             map.put("posinput" , snmap.get("ID"));
             map.put("operate" , 1);
 
-            log.info("sn 绑定请求报文：" + map.toString());
+            log.info("sn  绑定请求报文：" + map.toString());
             String result = HttpClient.post(bindSnURL , map , "1");
 
-            log.info("sn  绑定 想用报文：" + result);
+            log.info("sn  绑定响应报文：" + result);
 
             JSONObject json = JSONObject.fromObject(result);
-
             JSONObject data = json.getJSONObject("data");
-
             Integer respCode = data.getInt("stateCode");
-
 
             if(0 == respCode){
                 response.setRespCode(RespCode.SUCCESS[0]);
@@ -86,13 +83,10 @@ public class BindeSNService {
                 response.setRespCode(RespCode.SNERROR[0]);
                 response.setRespDesc(data.getString("mesg"));
             }
-
-            return ;
         }catch (Exception e){
             log.error("绑定异常" , e);
             response.setRespCode(RespCode.NETWORKError[0]);
             response.setRespDesc(RespCode.NETWORKError[1]);
         }
-
     }
 }

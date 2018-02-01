@@ -27,7 +27,6 @@ public class SmsUtil {
 		//*ACOUNT SID和AUTH TOKEN在登陆官网后，在“应用-管理控制台”中查看开发者主账号获取*
 		//*参数顺序：第一个参数是ACOUNT SID，第二个参数是AUTH TOKEN。                   *
 		//*******************************************************************************
-//		restAPI.setAccount("8a216da857ad33250157b252baa50407", "fa3388220f29470c844211466a389e20");
 		restAPI.setAccount("8a216da857ad33250157b252baa50407", "fa3388220f29470c844211466a389e20");
 
 

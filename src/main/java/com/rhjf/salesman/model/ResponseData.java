@@ -245,6 +245,18 @@ public class ResponseData implements Serializable {
 	/**  商户号 **/
 	private String customerNo;
 
+
+	/**  信用卡申请地址 **/
+	private String creditURL;
+
+
+	/**  文字消息 **/
+	private String message;
+
+
+	/**  商户信息的开关  **/
+	private String shopInfo;
+
 	
 	public String getMerchantNo() {
 		return merchantNo;
@@ -798,5 +810,29 @@ public class ResponseData implements Serializable {
 
 	public void setCustomerNo(String customerNo) {
 		this.customerNo = customerNo;
+	}
+
+	public String getCreditURL() {
+		return creditURL;
+	}
+
+	public void setCreditURL(String creditURL) {
+		this.creditURL = creditURL;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getShopInfo() {
+		return shopInfo;
+	}
+
+	public void setShopInfo(String shopInfo) {
+		this.shopInfo = shopInfo;
 	}
 }

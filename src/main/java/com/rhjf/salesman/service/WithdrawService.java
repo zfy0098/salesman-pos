@@ -72,19 +72,37 @@ public class WithdrawService {
 
     public void TxRecordList(SalesmanLogin user , Map params , ResponseData response){
 
-        List<Map<String,Object>> list = withdrawDB.txlist(new Object[]{user.getID()});
+        try {
 
-        JsonConfig jsonConfig = new JsonConfig();
-        jsonConfig.registerJsonValueProcessor(Timestamp.class, new DateJsonValueProcessor(DateUtil.yyyy_MM_ddHH_mm_ss));
-        JSONArray array = JSONArray.fromObject(list,jsonConfig);
+            WithdrawModel withdrawModel = UtilsConstant.mapToBean(params , WithdrawModel.class);
 
 
-        response.setProfitTotal("200");
+            StringBuffer tradeDate = new StringBuffer(withdrawModel.getTradeDate());
 
-        response.setList(array.toString());
+            if(tradeDate.length() < 6){
+                tradeDate.insert(4 , '0');
+            }
 
-        response.setRespCode(RespCode.SUCCESS[0]);
-        response.setRespDesc(RespCode.SUCCESS[1]);
+            List<Map<String,Object>> list = withdrawDB.txlist(new Object[]{user.getID() , tradeDate.toString()});
+
+
+            JsonConfig jsonConfig = new JsonConfig();
+            jsonConfig.registerJsonValueProcessor(Timestamp.class, new DateJsonValueProcessor(DateUtil.yyyy_MM_ddHH_mm_ss));
+            JSONArray array = JSONArray.fromObject(list,jsonConfig);
+
+
+            Double totalAmount = withdrawDB.txTotalAmount(new Object[]{user.getID() , tradeDate.toString()});
+
+            response.setProfitTotal(String.valueOf(totalAmount));
+
+            response.setList(array.toString());
+
+            response.setRespCode(RespCode.SUCCESS[0]);
+            response.setRespDesc(RespCode.SUCCESS[1]);
+
+
+        }catch (Exception e){
+            log.error("提现失败：" + e.getMessage() , e);
+        }
     }
-
 }

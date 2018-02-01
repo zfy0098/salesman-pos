@@ -22,10 +22,10 @@ public class OnlinePayMerchantDB extends DBBase{
 
 
 
-    public int initOnlineMerchantKey(Object[] obj){
+    public int initOnlineMerchantKey( Object[] obj){
         String sql = "insert into ONLINE_PAY_MERCHANT (id ,customer_no , customer_name  ," +
                 " paytype , t1rate , t0rate , reg_flag , creation , last_update , version , ALIT1RATE, ALIT0RATE) values " +
-                " (SEQ_ONLINE_PAY_MERCHANT_ID.nextval , ?,?, 'WX|ALI' ,?,?, 'Y' ,sysdate,sysdate , 1 , ?,? )";
+                " (SEQ_ONLINE_PAY_MERCHANT_ID.nextval , ?,?, 'WX|ALI' ,?,?, 'N' ,sysdate,sysdate , 1 , ?,? )";
         return jdbc.update(sql , obj);
     }
 }

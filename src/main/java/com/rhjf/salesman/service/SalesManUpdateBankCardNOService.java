@@ -45,16 +45,13 @@ public class SalesManUpdateBankCardNoService {
             merchantModel = UtilsConstant.mapToBean(params, MerchantModel.class);
 
         } catch (Exception e) {
-
             log.error("转换实体bean异常：", e);
-
             return;
         }
 
         log.info("业务员:" + user.getLoginID() + "修改结算卡信息卡号：" + merchantModel.getBankCardNo());
 
-
-        boolean flag = AuthUtil.authen(salesman.getName(), salesman.getIDNumber(), merchantModel.getBankCardNo());
+        boolean flag = AuthUtil.authentication(salesman.getName(), salesman.getIDNumber(), merchantModel.getBankCardNo() , salesman.getPhone());
         if (flag) {
             response.setRespCode(RespCode.BankCardInfoErroe[0]);
             response.setRespDesc(RespCode.BankCardInfoErroe[1]);
@@ -62,24 +59,24 @@ public class SalesManUpdateBankCardNoService {
         }
 
         salesman.setID(salesman.getID());
-
-        int x = salesManDB.updateBankNo(new Object[]{merchantModel.getBankCardNo(), merchantModel.getPayerPhone(), salesman.getID()});
-
         Map<String, Object> bankBinMap = binverifyDB.bankBin(merchantModel.getBankCardNo());
-        salesman.setBankName(UtilsConstant.ObjToStr(bankBinMap.get("bankName")));
+        salesman.setBankName(UtilsConstant.ObjToStr(bankBinMap.get("BANKNAME")));
+
+        int x = salesManDB.updateBankNo(new Object[]{merchantModel.getBankCardNo(), merchantModel.getPayerPhone(), salesman.getBankName()  ,salesman.getID()});
+
 
         if (x > 0) {
 
             log.info("业务员:" + user.getLoginID() + "修改结算信息成功");
 
-            response.setBankName(UtilsConstant.ObjToStr(bankBinMap.get("bankName")));
+            response.setBankName(UtilsConstant.ObjToStr(bankBinMap.get("BANKNAME")));
 
             String cardName = "储蓄卡";
-            if ("CREDIT_CARD".equals(bankBinMap.get("cardName"))) {
+            if ("CREDIT_CARD".equals(bankBinMap.get("CARDNAME"))) {
                 cardName = "信用卡";
             }
             response.setCardName(cardName);
-            response.setBankSymbol(UtilsConstant.ObjToStr(bankBinMap.get("bankCode")));
+            response.setBankSymbol(UtilsConstant.ObjToStr(bankBinMap.get("BANKCODE")));
 
             response.setRespCode(RespCode.SUCCESS[0]);
             response.setRespDesc(RespCode.SUCCESS[1]);

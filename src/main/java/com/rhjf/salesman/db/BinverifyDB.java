@@ -18,7 +18,6 @@ public class BinverifyDB extends DBBase{
         String sql = "select * from tab_pay_binverify where " +
                 "verifyCode = SUBSTR(?,1,verifyLength)";
 
-
         return queryForMap(sql , new Object[]{bankCardNo});
 
     }

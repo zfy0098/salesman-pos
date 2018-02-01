@@ -45,8 +45,20 @@ public class WithdrawDB extends DBBase{
     public List<Map<String,Object>> txlist(Object[] obj){
         String sql = "select applymoney , applydate , bankcode , bankname , accountno  " +
                 " from WITHDRAW a left join tab_pay_binverify b on b.verifyCode = SUBSTR(a.accountno,1,b.verifyLength) " +
-                " where a.applyuserid=?";
+                " where a.applyuserid=? and to_number(to_char(a.applydate , 'YYYYmm'))=?";
         return jdbc.queryForList(sql , obj);
     }
+
+
+
+    public Double txTotalAmount(Object[] obj){
+        String sql = "select sum(applymoney) " +
+                " from WITHDRAW  " +
+                " where applyuserid=? and to_number(to_char(applydate , 'YYYYmm'))=?";
+
+        Double amount = jdbc.queryForObject(sql , obj , Double.class);
+        return amount;
+    }
+
 
 }

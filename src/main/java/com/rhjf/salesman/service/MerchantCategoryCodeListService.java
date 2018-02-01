@@ -11,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,10 +30,10 @@ public class MerchantCategoryCodeListService {
         try {
             MerchantModel merchantModel = UtilsConstant.mapToBean(params, MerchantModel.class);
 
-            Map<String, String> mcc = MCCConstant.biaozhun;
+            Map<String, String> mcc = MCCConstant.biaoZhun;
 
             if ("2".equals(merchantModel.getMccCategory())) {
-                mcc = MCCConstant.youhui;
+                mcc = MCCConstant.youHui;
             }
 
             JSONArray array = new JSONArray();

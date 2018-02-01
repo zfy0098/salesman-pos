@@ -12,46 +12,49 @@ import java.util.TreeMap;
 
 /**
  * Created by hadoop on 2017/9/12.
+ *
+ * @author hadoop
+ *
  */
 @Component
 public class AuthUtil {
 
     private static Logger log = LoggerFactory.getLogger(AuthUtil.class);
 
-    public static String CHANNLENO;
+    public static String channelNo;
 
-    public static String CHANNELNAME;
+    public static String channelName;
 
-    public static String DES3KEY;
+    public static String  des3Key;
 
-    public static String SIGNKEY;
+    public static String signKey;
 
-    public static String AUTHENCATION_URL;
+    public static String authenticationURL;
 
 
     @Value("${REPORT_CHANNELNO}")
     public  void setChannelNo(String REPORT_CHANNELNO) {
-        CHANNLENO = REPORT_CHANNELNO;
+        channelNo = REPORT_CHANNELNO;
     }
     @Value("${REPORT_CHANNELNAME}")
     public void setChannelName(String REPORT_CHANNELNAME) {
-        CHANNELNAME = REPORT_CHANNELNAME;
+        channelName = REPORT_CHANNELNAME;
     }
 
     @Value("${REPORT_DES3_KEY}")
     public void setDes3Key(String REPORT_DES3_KEY) {
-        DES3KEY = REPORT_DES3_KEY;
+        des3Key = REPORT_DES3_KEY;
     }
 
     @Value("${REPORT_SIGN_KEY}")
     public void setSignKey(String REPORT_SIGN_KEY) {
-        SIGNKEY = REPORT_SIGN_KEY;
+        signKey = REPORT_SIGN_KEY;
     }
 
 
     @Value("${AUTHENCATION_URL}")
     public void setAuthencationUrl(String AUTHENCATION_URL){
-        this.AUTHENCATION_URL = AUTHENCATION_URL;
+        authenticationURL = AUTHENCATION_URL;
     }
 
 
@@ -100,23 +103,28 @@ public class AuthUtil {
 //    }
 
 
-    public  static  boolean authen(String name , String IDCardNo , String bankCardNo){
+    public  static  boolean authentication(String name , String IDCardNo , String bankCardNo , String payerPhone){
         try {
             Map<String,Object> map = new TreeMap<String,Object>();
-            map.put("channelNo", CHANNLENO);
-            map.put("channelName", CHANNELNAME);
+            map.put("channelNo", channelNo);
+            map.put("channelName", channelName);
             map.put("orderNo", UtilsConstant.RandCode());
-            map.put("cardNo", DESUtil.encode(DES3KEY,bankCardNo));
-            map.put("name", DESUtil.encode(DES3KEY,name));
-            map.put("idNo", DESUtil.encode(DES3KEY,IDCardNo));
+            map.put("cardNo", DESUtil.encode(des3Key,bankCardNo));
 
-            String sign = MD5.sign(JSONObject.fromObject(map) + SIGNKEY, "utf-8").toUpperCase();
+            if(!UtilsConstant.strIsEmpty(payerPhone)){
+                map.put("mobile" , payerPhone);
+            }
+
+            map.put("name", DESUtil.encode(des3Key,name));
+            map.put("idNo", DESUtil.encode(des3Key,IDCardNo));
+
+            String sign = MD5.sign(JSONObject.fromObject(map) + signKey, "utf-8").toUpperCase();
             map.put("sign", sign);
 
-            log.info("鉴权请求地址:" + AUTHENCATION_URL);
+            log.info("鉴权请求地址:" + authenticationURL);
             log.info("鉴权请求报文：" + map.toString());
 
-            String content = HttpClient.post(AUTHENCATION_URL , map , null);
+            String content = HttpClient.post(authenticationURL , map , null);
 
             log.info("鉴权响应报文：" + content);
 

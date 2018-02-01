@@ -46,8 +46,8 @@ public class RequestEntryController {
     private String dbInitKey;
 
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public Object RequestEntry(@RequestParam(value = "data", required = true) String data, HttpServletRequest request) {
+    @RequestMapping(value = "", method = {RequestMethod.POST , RequestMethod.GET})
+    public Object RequestEntry(@RequestParam(value = "data" , required = false) String data, HttpServletRequest request) {
 
 
         if (UtilsConstant.strIsEmpty(data)) {
@@ -66,13 +66,14 @@ public class RequestEntryController {
             JSONObject json = JSONObject.fromObject(data);
             Map<String, Object> map = UtilsConstant.jsonToMap(json);
 
+
+            boolean flag = false;
+
             /** 发送时间  **/
             String sendTime = json.getString("sendTime");
             if (UtilsConstant.strIsEmpty(sendTime)) {
                 log.info("发送时间sendTime为空");
-                response.setRespCode(RespCode.ParamsError[0]);
-                response.setRespDesc(RespCode.ParamsError[1]);
-                return paraFilterReturn(response);
+                flag = true;
             }
             response.setSendTime(sendTime);
 
@@ -80,9 +81,7 @@ public class RequestEntryController {
             String txndir = json.getString("txndir");
             if (UtilsConstant.strIsEmpty(txndir)) {
                 log.info("交易类型txndir为空");
-                response.setRespCode(RespCode.TxndirError[0]);
-                response.setRespDesc(RespCode.TxndirError[1]);
-                return response;
+                flag = true;
             }
             response.setTxndir(txndir);
 
@@ -90,31 +89,30 @@ public class RequestEntryController {
             String trade = PropertyUtils.getValue(txndir);
             if (UtilsConstant.strIsEmpty(trade)) {
                 log.info("交易类型：" + txndir + ", 系统未配置该交易类型");
-                response.setRespCode(RespCode.TxndirError[0]);
-                response.setRespDesc(RespCode.TxndirError[1]);
-                return paraFilterReturn(response);
+                flag = true;
             }
 
             /** 终端流水号 **/
             String sendSeqID = json.getString("sendSeqId");
             if (UtilsConstant.strIsEmpty(sendSeqID)) {
                 log.info("终端流水号sendSeqId为空");
-                response.setRespCode(RespCode.ParamsError[0]);
-                response.setRespDesc(RespCode.ParamsError[1]);
-                return paraFilterReturn(response);
+                flag = true;
             }
             response.setSendSeqID(sendSeqID);
-
 
             /**  终端登录信息 **/
             String loginPSN = json.getString("terminalInfo");
             if (UtilsConstant.strIsEmpty(loginPSN)) {
                 log.info("登录信息(PSN)terminalInfo为空");
+                flag = true;
+            }
+            response.setTerminalInfo(loginPSN);
+
+            if(flag){
                 response.setRespCode(RespCode.ParamsError[0]);
                 response.setRespDesc(RespCode.ParamsError[1]);
                 return paraFilterReturn(response);
             }
-            response.setTerminalInfo(loginPSN);
 
 
             log.info("请求class信息:" + trade);
@@ -148,7 +146,7 @@ public class RequestEntryController {
                     response.setRespDesc(RespCode.userDoesNotExist[1]);
                 } else {
 
-                    if (!"A001".equals(txndir) && !"A004".equals(txndir)) {
+                    if (!txndir.startsWith("A") && !txndir.startsWith("C")) {
                         if (!loginPSN.equals(user.getLoginPSN())) {
                             log.info(user.getLoginID() + "被其他设备登录 , 终端上传: " + loginPSN + ",数据库保存" + user.getLoginPSN());
                             response.setRespCode(RespCode.LOGINError[0]);
@@ -157,7 +155,7 @@ public class RequestEntryController {
                         }
                     }
 
-                    boolean flag = true;
+                    flag = true;
                     if ("1".equals(needMac)) {
                         /** 需要校验mac **/
                         //  获取用户秘钥信息

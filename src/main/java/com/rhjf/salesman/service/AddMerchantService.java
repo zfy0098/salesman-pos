@@ -1,10 +1,12 @@
 package com.rhjf.salesman.service;
 
 import com.rhjf.salesman.constant.Constants;
-import com.rhjf.salesman.constant.MCCConstant;
 import com.rhjf.salesman.constant.RespCode;
 import com.rhjf.salesman.db.*;
-import com.rhjf.salesman.model.*;
+import com.rhjf.salesman.model.MerchantModel;
+import com.rhjf.salesman.model.ResponseData;
+import com.rhjf.salesman.model.SalesMan;
+import com.rhjf.salesman.model.SalesmanLogin;
 import com.rhjf.salesman.utils.*;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -14,10 +16,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.TreeMap;
 
 /**
  *
@@ -116,6 +118,8 @@ public class AddMerchantService {
     public void inputMerchant(SalesmanLogin user , Map params , ResponseData response){
         try{
 
+            log.info(" 业务员：" + user.getLoginID() + "开始添加商户");
+
             Random random = new Random(Constants.alipayMCCType.length - 1);
             int index = random.nextInt(Constants.alipayMCCType.length - 1);
             String aliPayMccNumber = Constants.alipayMCCType[index];
@@ -135,6 +139,13 @@ public class AddMerchantService {
             Map<String,Object> agentInfo = agentDB.agentInfo(salesMan.getAgentID());
             String posAgentNo = UtilsConstant.ObjToStr(agentInfo.get("AGENT_NO"));
 
+            boolean flag = AuthUtil.authentication(merchantInfo.getAccountName() ,merchantInfo.getIDCardNo() , merchantInfo.getBankCardNo() , merchantInfo.getPayerPhone());
+            if(flag){
+                log.info("业务员：" + user.getLoginID() + "新增的商户： " + merchantInfo.getMerchantPhone() + " 鉴权信息没有通过");
+                response.setRespCode(RespCode.BankCardInfoErroe[0]);
+                response.setRespDesc(RespCode.BankCardInfoErroe[1]);
+                return ;
+            }
 
             Map<String, Object> posMap = new HashMap<String, Object>(16);
             //原平台商户号 原值返回
@@ -301,7 +312,6 @@ public class AddMerchantService {
                 String aliPayDesKey = respJS.getString("AlipaydesKey");        // 支付des秘钥
 
                 log.info("保存新增商户：" + merchantInfo.getMerchantPhone() + "基本信息");
-
                 log.info("保存新增商户：" + merchantInfo.getMerchantPhone() + "基本信息");
 
 
@@ -311,7 +321,9 @@ public class AddMerchantService {
 
                 log.info("保存互联网商户秘钥信息");
                 onlinePayMerchantDB.saveMerchantTradeKey(new Object[]{customer_no , merchantNo ,merchantInfo.getMerchantName()  , signKey  , desKey , queryKey ,
-                        merchantInfo.getWxT0FeeRate() ,  merchantInfo.getWxT0FeeRate()  , merchantInfo.getAlit0FeeRate() , merchantInfo.getAlit0FeeRate()});
+                        String.valueOf(AmountUtil.div( merchantInfo.getWxT0FeeRate()  , "100" ,3 )) , String.valueOf( AmountUtil.div( merchantInfo.getWxT0FeeRate()  , "100" ,3 ))
+                        ,  String.valueOf( AmountUtil.div(merchantInfo.getAlit0FeeRate() , "100" ,3 )) ,
+                        String.valueOf(AmountUtil.div( merchantInfo.getAlit0FeeRate() , "100" ,3 ))});
 
                 onlineStatus = 1;
 
@@ -327,7 +339,8 @@ public class AddMerchantService {
                 log.info(" merchantInfo.getAlit0FeeRate():" +  merchantInfo.getAlit0FeeRate());
 
                 onlinePayMerchantDB.initOnlineMerchantKey(new Object[]{ customer_no , merchantInfo.getMerchantName() ,
-                    merchantInfo.getWxT0FeeRate() , merchantInfo.getWxT0FeeRate()  ,  merchantInfo.getAlit0FeeRate() , merchantInfo.getAlit0FeeRate()});
+                        String.valueOf(AmountUtil.div( merchantInfo.getWxT0FeeRate()  , "100" ,3 )) , String.valueOf(AmountUtil.div( merchantInfo.getWxT0FeeRate()  , "100" ,3 ))
+                        ,  String.valueOf(AmountUtil.div(merchantInfo.getAlit0FeeRate() , "100",3)) , String.valueOf(AmountUtil.div( merchantInfo.getAlit0FeeRate() , "100",3 ))});
 
                 log.info("保存新增商户：" + merchantInfo.getMerchantPhone() + "基本信息");
 
